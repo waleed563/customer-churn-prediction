@@ -42,7 +42,7 @@ export default function App() {
 
   return (
     <div style={{ maxWidth: "500px", margin: "50px auto", fontFamily: "sans-serif", padding: "20px" }}>
-      <h1 style={{ textAlign: "center" }}>Customer Churn Predictor</h1>
+      <h1 style={{ textAlign: "center", fontSize: "24px" }}>Customer Churn Predictor</h1>
       <p style={{ textAlign: "center", color: "#666" }}>Enter customer details to predict churn</p>
 
       {Object.keys(form).map((key) => (
