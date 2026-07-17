@@ -1,5 +1,11 @@
 # Customer Churn Prediction
 
+## Live Demo
+- **Frontend:** https://customer-churn-prediction-ten-lyart.vercel.app/
+- **Backend API:** https://customer-churn-prediction-xuip.onrender.com/docs
+
+---
+
 ## What is this project?
 A machine learning web app that predicts whether a telecom customer 
 will cancel their subscription (churn) or stay.
@@ -24,6 +30,43 @@ This model takes customer usage data and predicts:
 - Rows: 3,333 customers
 - Columns: 11 features
 - Target column: Churn (0 = stayed, 1 = churned)
+
+---
+
+## Test the Model
+Use these values to test a customer likely to churn:
+
+| Field | Value |
+|-------|-------|
+| AccountWeeks | 100 |
+| ContractRenewal | 0 |
+| DataPlan | 0 |
+| DataUsage | 0 |
+| CustServCalls | 5 |
+| DayMins | 300 |
+| DayCalls | 100 |
+| MonthlyCharge | 80 |
+| OverageFee | 10 |
+| RoamMins | 10 |
+
+Expected result: **Will Churn — ~100% probability**
+
+Use these values for a customer likely to stay:
+
+| Field | Value |
+|-------|-------|
+| AccountWeeks | 200 |
+| ContractRenewal | 1 |
+| DataPlan | 1 |
+| DataUsage | 3 |
+| CustServCalls | 1 |
+| DayMins | 150 |
+| DayCalls | 80 |
+| MonthlyCharge | 50 |
+| OverageFee | 5 |
+| RoamMins | 5 |
+
+Expected result: **Will Stay**
 
 ---
 
@@ -53,51 +96,26 @@ during training, even though they are fewer in number.
 ---
 
 ## Evaluation Metrics
-We did NOT use accuracy as our main metric because of class imbalance.
-Instead we used:
 
-| Metric    | Score | What it means |
-|-----------|-------|---------------|
-| Accuracy  | 0.79  | 79% overall correct — misleading here |
-| Precision | 0.40  | When model says churn, right 40% of time |
-| Recall    | 0.80  | Catches 80% of actual churners |
-| F1 Score  | 0.53  | Balance between precision and recall |
+| Metric | Score | What it means |
+|--------|-------|---------------|
+| Accuracy | 0.79 | 79% overall correct — misleading here |
+| Precision | 0.40 | When model says churn, right 40% of time |
+| Recall | 0.80 | Catches 80% of actual churners |
+| F1 Score | 0.53 | Balance between precision and recall |
 
 Recall of 0.80 is the most important metric here.
 Missing a churning customer costs the business money.
-Better to flag too many than miss real churners.
 
 ---
 
 ## Tech Stack
-| Layer    | Technology |
-|----------|------------|
-| Model    | Python, Scikit-learn, Logistic Regression |
-| Backend  | FastAPI, Uvicorn |
+| Layer | Technology |
+|-------|------------|
+| Model | Python, Scikit-learn, Logistic Regression |
+| Backend | FastAPI, Uvicorn |
 | Frontend | React, Vite |
-| Storage  | Joblib (.pkl model file) |
-
----
-
-## How to Run Locally
-
-### Backend
-```bash
-cd ml_models
-source venv/Scripts/activate
-pip install -r requirements.txt
-uvicorn main:app --reload
-```
-
-### Frontend
-```bash
-cd frontend
-npm install
-npm run dev
-```
-
-API runs on: http://127.0.0.1:8000
-UI runs on: http://localhost:5173
+| Deployment | Render (backend), Vercel (frontend) |
 
 ---
 
@@ -105,8 +123,8 @@ UI runs on: http://localhost:5173
 | Feature | Description |
 |---------|-------------|
 | AccountWeeks | How long customer has had account |
-| ContractRenewal | Did they renew contract recently? |
-| DataPlan | Do they have a data plan? |
+| ContractRenewal | Did they renew contract recently? (1=Yes, 0=No) |
+| DataPlan | Do they have a data plan? (1=Yes, 0=No) |
 | DataUsage | GB of data used per month |
 | CustServCalls | Number of customer service calls |
 | DayMins | Minutes used during the day |
@@ -114,9 +132,3 @@ UI runs on: http://localhost:5173
 | MonthlyCharge | Monthly bill amount |
 | OverageFee | Extra charges beyond plan |
 | RoamMins | Minutes used while roaming |
-
----
-
-## Results
-The model successfully identifies 80% of customers who will churn.
-This gives telecom companies a tool to take action before losing customers.
